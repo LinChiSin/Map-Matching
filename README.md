@@ -18,7 +18,7 @@ An example of indoor map matching using particle filter to calibrate the prelimi
 ### 基本原理
 
 + 将不同时刻的轨迹点表示为一堆粒子，利用粒子模拟轨迹走向，并结合地图信息（是否穿墙）来校正初始估算轨迹
-+使用[LSD-OpenCV-Matlab](https://github.com/primetang/LSD-OpenCV-MATLAB) 提供的lsd函数提取地图图片内部的线段。lsd函数输入为地图图片文件名，输出结果为m*5矩阵，前四列分别表示线段两个端点的坐标，第五列表示线段的宽度（不常用）
++ 使用[LSD-OpenCV-Matlab](https://github.com/primetang/LSD-OpenCV-MATLAB) 提供的lsd函数提取地图图片内部的线段。lsd函数输入为地图图片文件名，输出结果为m*5矩阵，前四列分别表示线段两个端点的坐标，第五列表示线段的宽度（不常用）
 ![经LSD提取的直线如红色线段所示](http://ww1.sinaimg.cn/mw690/7b4b737bly1fprmqnvf6zj218g0lqjso.jpg)
 
 + 使用基于[Fast Line Segment Intersection](https://cn.mathworks.com/matlabcentral/fileexchange/27205-fast-line-segment-intersection)修改的lineSegmentIntersect函数判断轨迹是否穿墙，并计算穿墙点坐标。lineSegmentIntersect函数输入为两组待检测相交线段组的坐标，输出结果为结构体，包含交叉检验矩阵、交叉点坐标矩阵等。
