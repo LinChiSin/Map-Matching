@@ -7,6 +7,7 @@ close all;
 
 
 %读取运动轨迹并平滑
+
 load('trajBefore.mat');
 smooth = 200;
 x=trajBefore;
@@ -21,12 +22,20 @@ y0 = x_mean(1,8:end - 8);
 
 
 %轨迹与旋转
-RMtheta = 30*pi/180;
+%按指定距离距离平移到最佳位置
+
+
+RMtheta = 30*pi/180;   %本案例中初始旋转角度为30
 x = x0.*cos(RMtheta) - y0.*sin(RMtheta);
 y = x0.*sin(RMtheta) + y0.*cos(RMtheta);
 
-%给定PDR初始点
-x = x + 8.09;
+
+
+%给定PDR初始点位置
+%按指定距离距离平移到最佳位置
+%本案例为向右平移8.09，向下平移-27.22
+
+x = x + 8.09;   %本案例中初始点坐标为（8.09，-27.22），给定坐标系为
 y = y - 27.22;
 
 
@@ -65,14 +74,18 @@ M2=zeros(length(wall_vectors),4);
 wall_vectors=wall_vectors';
 
 %转换为墙壁向量矩阵
+
 M2(:,1)=wall_vectors(:,1);
 M2(:,2)=wall_vectors(:,3);
 M2(:,3)=wall_vectors(:,2);
 M2(:,4)=wall_vectors(:,4);
 
 %计算真实轨迹与地图之间的比例尺，并将地图与墙壁向量进行比例转换
+% 本案例中进行了若干手动调整的比例参数（如4、6、20），建议根据实际地图手动调整，待改进
+
 MaxX=max(X');
 MinY=min(X');
+
 scaleX=(t1/round(MaxX(1))+6);
 scaleY=-1*(t2/(floor(abs(MinY(2)))+20));
 wall_new(2,:)=-wall(1,:)/(t2/(floor(abs(MinY(2)))+20));
